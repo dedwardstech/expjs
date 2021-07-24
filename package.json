@@ -1,0 +1,12 @@
+{
+  "name": "expjs",
+  "version": "0.0.1",
+  "description": "Binary expression parser for javascript",
+  "main": "index.js",
+  "author": "David Edwards",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  }
+}
