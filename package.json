@@ -5,8 +5,21 @@
   "main": "index.js",
   "author": "David Edwards",
   "license": "MIT",
+  "scripts": {
+    "test": "jasmine-ts --config=./spec/support/jasmine.json",
+    "test:watch": "nodemon --ext ts --exec 'jasmine-ts --config=./jasmine.json'",
+    "tsc": "tsc"
+  },
   "devDependencies": {
+    "@types/jasmine": "^3.9.0",
+    "jasmine": "^3.9.0",
+    "jasmine-ts": "^0.4.0",
+    "nodemon": "^2.0.12",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/node": "^16.7.10",
+    "jasmine-spec-reporter": "^7.0.0"
   }
 }
