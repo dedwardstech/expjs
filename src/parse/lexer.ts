@@ -11,9 +11,9 @@ export class Lexer {
     private input: string;
     private state: StateFn | null = stateInit;
 
-    private position: number = -1;
-    private start: number = -1;
-    private width: number = -1;
+    private position: number = 0;
+    private start: number = 0;
+    private width: number = 0;
     private tokens: Token[] = [];
 
     constructor(input: string) {
@@ -27,7 +27,7 @@ export class Lexer {
             return EOF;
         }
 
-        const r = this.input.substring(this.position);
+        const r = this.input.substring(this.position, this.position + 1);
         this.position += r.length;
 
         return r;
@@ -49,7 +49,7 @@ export class Lexer {
     }
 
     public buffer(): string {
-        return this.input.substring(this.position, this.width);
+        return this.input.substring(this.start, this.position).trimEnd();
     }
 
     public ignore(): void {
@@ -79,11 +79,16 @@ export class Lexer {
     }
 
     public lineNumber(): number {
-        return -1;
+        return this.input.substring(0, this.position).split('\n').length;
     }
 
     public columnNumber(): number {
-        return -1;
+        const lf = this.input.substring(0, this.position).lastIndexOf('\n');
+        if (lf !== -1) {
+            return this.input.substring(lf + 1, this.position).length;
+        } else {
+            return this.input.substring(0, this.position).length;
+        }
     }
 
     public advanceUntil(until: (val: string) => boolean): string {
@@ -99,7 +104,6 @@ export class Lexer {
     public token() {
         let state: StateFn | null = this.state;
         while(state !== null) {
-            console.log('looping')
             state = state(this);
         }
 
@@ -110,7 +114,6 @@ export class Lexer {
 const stateInit = (l: Lexer): StateFn | null => {
     const s = l.next();
 
-    console.log('stateInit', s);
     if (isWhitespace(s)) {
         l.ignore();
         return stateInit;
