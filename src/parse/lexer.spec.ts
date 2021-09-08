@@ -1,7 +1,7 @@
 import { Token, TokenType } from "./token";
 import { Lexer } from "./lexer";
 
-fdescribe('Lexer', () => {
+describe('Lexer', () => {
     it('parses expression strings into tokens', () => {
         interface TestCase {
             expression: string;
