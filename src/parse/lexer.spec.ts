@@ -1,5 +1,5 @@
-import {Token, TokenType} from "./token";
-import {Lexer} from "./lexer";
+import { Token, TokenType } from "./token";
+import { Lexer } from "./lexer";
 
 fdescribe('Lexer', () => {
     it('parses expression strings into tokens', () => {
@@ -27,16 +27,39 @@ fdescribe('Lexer', () => {
                     { type: TokenType.EOF, value: '', line: 1, col: 9 }
                 ]
             },
-
+            {
+                expression: `(bar!="baz")&&foo==123.00`,
+                tokens: [
+                    { type: TokenType.LeftParen, value: '(' },
+                    { type: TokenType.Identifier, value: 'bar' },
+                    { type: TokenType.IsNotEqual, value: '!=' },
+                    { type: TokenType.String, value: 'baz' },
+                    { type: TokenType.RightParen, value: ')' },
+                    { type: TokenType.LogicalAnd, value: '&&' },
+                    { type: TokenType.Identifier, value: 'foo' },
+                    { type: TokenType.IsEqual, value: '==' },
+                    { type: TokenType.Number, value: '123.00' },
+                    { type: TokenType.EOF, value: '' }
+                ]
+            },
+            {
+                expression: `!true`,
+                tokens: [
+                    { type: TokenType.LogicalNot, value: '!' },
+                    { type: TokenType.Boolean, value: 'true' },
+                    { type: TokenType.EOF, value: '' }
+                ]
+            }
         ];
-
-        const tokensAreEqual = (t1: Token, t2: Token): boolean => t1.type === t2.type && t1.value === t2.value;
 
         tests.forEach(t => {
             const l = new Lexer(t.expression);
             const tokens = l.token();
 
-            expect(tokens.every((token, idx) => tokensAreEqual(token, t.tokens[idx]))).toBeTrue();
+            tokens.forEach((token: Token, idx: number) => {
+                expect(token.type).toEqual(t.tokens[idx].type);
+                expect(token.value).toEqual(t.tokens[idx].value);
+            });
         });
     });
 });

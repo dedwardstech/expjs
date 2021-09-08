@@ -28,6 +28,7 @@ export class Lexer {
         }
 
         const r = this.input.substring(this.position, this.position + 1);
+        this.width = r.length;
         this.position += r.length;
 
         return r;
@@ -140,7 +141,7 @@ const stateInit = (l: Lexer): StateFn | null => {
     }
 
     if (s === '(') {
-        l.emit(TokenType.LeftParent);
+        l.emit(TokenType.LeftParen);
         return stateInit;
     }
 

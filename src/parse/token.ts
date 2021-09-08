@@ -12,7 +12,7 @@ export enum TokenType {
     LogicalOr = 'logical-or',
     LogicalNot = 'logical-not',
 
-    LeftParent = 'left-paren',
+    LeftParen = 'left-paren',
     RightParen = 'right-paren',
 
     IsEqual = 'is-equal',
@@ -25,7 +25,7 @@ export enum TokenType {
 
 export interface Token {
     type: TokenType;
-    value: any;
-    line: number;
-    col: number;
+    value?: any;
+    line?: number;
+    col?: number;
 }
