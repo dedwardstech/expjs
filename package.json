@@ -6,7 +6,7 @@
   "author": "David Edwards",
   "license": "MIT",
   "scripts": {
-    "test": "jasmine-ts --config=./spec/support/jasmine.json",
+    "test": "jasmine-ts --config=./jasmine.json",
     "test:watch": "nodemon --ext ts --exec 'jasmine-ts --config=./jasmine.json'",
     "tsc": "tsc"
   },
